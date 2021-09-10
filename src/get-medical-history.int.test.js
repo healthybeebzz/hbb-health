@@ -1,14 +1,21 @@
 import {expect} from 'chai';
 import request from 'supertest';
+import {createWebServer} from "./create-web-server.js";
 
 
 describe('get medical-history', () => {
+    let port;
+    let server;
 
     before(async () => {
+        server = createWebServer();
+        port = server.port;
 
+        await server.start();
     });
 
     after(async () => {
+        await server.stop();
     });
 
     it('given existing entries > when calling get medical-history > should return valid response', async () => {
@@ -18,15 +25,12 @@ describe('get medical-history', () => {
             externalToken: 1
         };
 
-        const response = await request('http://localhost:3000/').post('/test123').send(payload);
+        const response = await request(`http://localhost:3000`).post('/create/medical-history').send(payload);
 
         expect(response.status).to.be.equal(200);
         expect(response.body).to.be.deep.equal({
-            personId: 1,
-            entries: [{
-                date: '12.12.2012',
-                info: 'Bla bla',
-            }]
+            "message": "New medical History created.",
+            "status": "ok"
         });
     });
 });

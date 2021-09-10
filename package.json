@@ -3,7 +3,7 @@
   "description": "#### Table medical history - gets and adds medical entries - add medical history entry - get medical history",
   "version": "1.0.0",
   "type": "module",
-  "main": "src/index.js",
+  "main": "src/create-web-server.js",
   "scripts": {
     "start": "node .",
     "test": "nyc mocha --exit \"src/**/*.test.js\""
