@@ -27,6 +27,7 @@ app.get('/person/:personId/medicalHistory', (req, res) => {
 });
 
 app.post('/create/medicalHistory', (req, res) => {
+    console.log(req.body);
     const response = {
         status: "ok",
         message: "New medical History created."
