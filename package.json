@@ -1,0 +1,24 @@
+{
+  "name": "hbb-health",
+  "description": "#### Table medical history - gets and adds medical entries - add medical history entry - get medical history",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/healthybeebzz/hbb-health.git"
+  },
+  "author": "maria",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/healthybeebzz/hbb-health/issues"
+  },
+  "homepage": "https://github.com/healthybeebzz/hbb-health#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
