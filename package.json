@@ -3,10 +3,10 @@
   "description": "#### Table medical history - gets and adds medical entries - add medical history entry - get medical history",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node .",
-    "test": "test"
+    "test": "nyc mocha --exit \"src/**/*.test.js\""
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,11 @@
   "homepage": "https://github.com/healthybeebzz/hbb-health#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.1.1",
+    "nyc": "^15.1.0",
+    "supertest": "^6.1.6"
   }
 }

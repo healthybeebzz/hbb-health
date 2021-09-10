@@ -8,25 +8,21 @@ const port = 3000;
 app.use(bodyParser.json());
 
 
-app.get('/person/:personId/medicalHistory', (req, res) => {
+app.get('/person/:personId/medical-history', (req, res) => {
     const personId = req.params.personId;
 
     const response = {
         personId,
-        firstName: "Maria",
-        lastName: "Mihaila",
-        medicalHistory: {
-            diseases: 'none',
-            age: '26',
-            sex: 'f',
-            reasonForCheckup: 'headaches'
-        }
+        entries: [{
+            date: '12.12.2012',
+            info: 'Bla bla',
+        }]
     };
 
     res.send(response);
 });
 
-app.post('/create/medicalHistory', (req, res) => {
+app.post('/create/medical-history', (req, res) => {
     console.log(req.body);
     const response = {
         status: "ok",
