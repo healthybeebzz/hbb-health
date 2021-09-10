@@ -26,6 +26,14 @@ app.get('/person/:personId/medicalHistory', (req, res) => {
     res.send(response);
 });
 
+app.post('/create/medicalHistory', (req, res) => {
+    const response = {
+        status: "ok",
+        message: "New medical History created."
+    }
+    res.send(response);
+});
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
