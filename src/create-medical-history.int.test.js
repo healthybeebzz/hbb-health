@@ -3,7 +3,7 @@ import request from 'supertest';
 import {createWebServer} from "./create-web-server.js";
 
 
-describe('get medical-history', () => {
+describe('/create/medical-history', () => {
     let port;
     let server;
 
@@ -25,7 +25,7 @@ describe('get medical-history', () => {
             externalToken: 1
         };
 
-        const response = await request(`http://localhost:3000`).post('/create/medical-history').send(payload);
+        const response = await request(`http://localhost:${port}`).post('/create/medical-history').send(payload);
 
         expect(response.status).to.be.equal(200);
         expect(response.body).to.be.deep.equal({
