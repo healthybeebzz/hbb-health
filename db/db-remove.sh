@@ -1,1 +1,1 @@
-docker rm hbb-person-db
+docker rm hbb-health-db

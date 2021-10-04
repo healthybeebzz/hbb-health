@@ -1,1 +1,1 @@
-docker run --name hbb-person-db -d -p 5433:5432 hbb-person-db
+docker run --name hbb-health-db -d -p 5433:5432 hbb-health-db
