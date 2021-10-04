@@ -9,14 +9,18 @@ export const createWebServer = () => {
 
     app.use(bodyParser.json());
 
-    app.get('/person/:personId/medical-history', (req, res) => {
-        const personId = req.params.personId;
+    app.get('/history/:userId', (req, res) => {
+        const userId = req.params.userId;
 
         const response = {
-            personId,
+            userId,
             entries: [{
-                date: '12.12.2012',
-                info: 'Bla bla',
+                childhoodDisease: 'bkdjad',
+                majorAdultDisease:'rhsh',
+                surgeries: 'dfhsdh',
+                priorInjuries: 'dfhdfh',
+                medications: 'sdhd',
+                allergies: 'dhdfh'
             }]
         };
 
