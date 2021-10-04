@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/healthybeebzz/hbb-health#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "http": "*"
   },
   "devDependencies": {
     "chai": "^4.3.4",
