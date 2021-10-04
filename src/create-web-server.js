@@ -1,6 +1,7 @@
-import http from 'http';
-import express from 'express';
-import bodyParser from 'express';
+import * as http from 'http';
+import * as express from "express";
+import * as bodyParser from "express";
+
 
 export const createWebServer = () => {
     const app = express();
@@ -29,14 +30,49 @@ export const createWebServer = () => {
         res.send(response);
     });
 
-    app.post('/create/medical-history', (req, res) => {
-        console.log(req.body);
+    app.post('/history/create', (req, res) => {
+        // temporary payload format
+
+        const payload = {
+            userId: 12,
+            childhoodDisease: 'bkdjad',
+            majorAdultDisease:'rhsh',
+            surgeries: 'dfhsdh',
+            priorInjuries: 'dfhdfh',
+            medications: 'sdhd',
+            allergies: 'dhdfh'
+        }
+
         const response = {
             status: "ok",
             message: "New medical History created."
         }
         res.send(response);
     });
+
+    app.put('/history/:userId/edit', (req, res) => {
+
+        // temporary payload format
+        const payload = {
+            userId: 12,
+            childhoodDisease: 'bkdjad',
+            majorAdultDisease:'rhsh',
+            surgeries: 'dfhsdh',
+            priorInjuries: 'dfhdfh',
+            medications: 'sdhd',
+            allergies: 'dhdfh'
+        }
+
+        const response = {
+            status: "ok",
+            message: "Medical history updated."
+        }
+        res.send(response);
+    });
+
+    app.delete('/history/:userId/delete', (req: Request, res: Response) => {
+
+    })
 
     const server = http.createServer(app);
 
