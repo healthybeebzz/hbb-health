@@ -10,6 +10,8 @@ export const createWebServer = () => {
     app.use(bodyParser.json());
 
     app.get('/history/:userId', (req, res) => {
+        if (!req.params.userId) throw new Error('The `userId` parameter is not present.');
+
         const userId = req.params.userId;
 
         const response = {
