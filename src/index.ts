@@ -2,4 +2,9 @@ import {createWebServer} from "./create-web-server.js";
 
 const server = createWebServer();
 
-await server.start();
+const startServer = async () => {
+    await server.start()
+}
+
+startServer();
+
