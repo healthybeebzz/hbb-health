@@ -45,29 +45,39 @@ export const createWebServer = () => {
         res.send(response);
     });
 
-    app.put('/history/:userId/edit', (req, res) => {
+    app.put('/history/:userId/edit', async(req, res) => {
+        const records = await fetchRecords(pool, Number(req.params.userId));
 
-        // temporary payload format
-        const payload = {
-            userId: 12,
-            childhoodDisease: 'bkdjad',
-            majorAdultDisease:'rhsh',
-            surgeries: 'dfhsdh',
-            priorInjuries: 'dfhdfh',
-            medications: 'sdhd',
-            allergies: 'dhdfh'
-        }
+        if (req.body.childhoodDisease) records.childhoodDisease = req.body.childhoodDisease;
+        if (req.body.majorAdultDisease) records.majorAdultDisease = req.body.majorAdultDisease;
+        if (req.body.surgeries) records.surgeries = req.body.surgeries;
+        if (req.body.priorInjuries) records.priorInjuries = req.body.priorInjuries;
+        if (req.body.medications) records.medications = req.body.medications;
+        if (req.body.allergies) records.allergies = req.body.allergies;
+
+        await pool.query(`
+            UPDATE hbb_health.records 
+                SET childhood_disease = '${records.childhoodDisease}',
+                major_adult_disease = '${records.majorAdultDisease}',
+                surgeries = '${records.surgeries}',
+                prior_injuries = '${records.priorInjuries}',
+                medications = '${records.medications}',
+                allergies = '${records.allergies}'
+            WHERE hbb_health.records.user_id=${req.params.userId}`);
 
         const response = {
-            status: "ok",
-            message: "Medical history updated."
+            userId: req.params.userId,
+            patientDetails: records,
         }
+
         res.send(response);
     });
 
-    app.delete('/history/:userId/delete', (req, res) => {
+    app.delete('/history/:userId/delete', async(req, res) => {
+        await pool.query(`
+            DELETE FROM hbb_health.records WHERE user_id=${req.params.userId}`);
 
-        res.send(`The user with the id ${req.params.userId} was deleted from the database.`);
+        res.send(`The records with the user id ${req.params.userId} was deleted from the database.`);
     })
 
     const server = http.createServer(app);
