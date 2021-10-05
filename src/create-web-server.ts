@@ -1,7 +1,7 @@
 import * as http from 'http';
 import * as express from "express";
 import * as bodyParser from 'express';
-import {insertOperation} from "./operations";
+import {fetchRecords, insertOperation} from "./operations";
 import {connectToDb} from "./db-connect";
 
 
@@ -14,21 +14,15 @@ export const createWebServer = () => {
 
     app.use(bodyParser.json());
 
-    app.get('/history/:userId', (req, res) => {
+    app.get('/history/:userId', async(req, res) => {
         if (!req.params.userId) throw new Error('The `userId` parameter is not present.');
 
         const userId = req.params.userId;
+        const records = await fetchRecords(pool, Number(req.params.userId));
 
         const response = {
             userId,
-            entries: [{
-                childhoodDisease: 'bkdjad',
-                majorAdultDisease:'rhsh',
-                surgeries: 'dfhsdh',
-                priorInjuries: 'dfhdfh',
-                medications: 'sdhd',
-                allergies: 'dhdfh'
-            }]
+            records
         };
 
         res.send(response);
