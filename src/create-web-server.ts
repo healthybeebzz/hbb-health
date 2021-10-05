@@ -3,6 +3,7 @@ import * as express from "express";
 import * as bodyParser from 'express';
 import {fetchRecords, insertOperation} from "./operations";
 import {connectToDb} from "./db-connect";
+import {asyncHandler} from "./async-handler";
 
 
 export const createWebServer = () => {
@@ -14,7 +15,7 @@ export const createWebServer = () => {
 
     app.use(bodyParser.json());
 
-    app.get('/history/:userId', async(req, res) => {
+    app.get('/history/:userId', asyncHandler(async (req, res) => {
         if (!req.params.userId) throw new Error('The `userId` parameter is not present.');
 
         const userId = req.params.userId;
@@ -26,9 +27,9 @@ export const createWebServer = () => {
         };
 
         res.send(response);
-    });
+    }));
 
-    app.post('/history/create', async(req, res) => {
+    app.post('/history/create', asyncHandler(async(req, res) => {
 
         await insertOperation(pool, {
             childhoodDisease: req.body.childhoodDisease,
@@ -43,9 +44,9 @@ export const createWebServer = () => {
             message: "New medical History created."
         }
         res.send(response);
-    });
+    }));
 
-    app.put('/history/:userId/edit', async(req, res) => {
+    app.put('/history/:userId/edit', asyncHandler(async(req, res) => {
         const records = await fetchRecords(pool, Number(req.params.userId));
 
         if (req.body.childhoodDisease) records.childhoodDisease = req.body.childhoodDisease;
@@ -71,14 +72,14 @@ export const createWebServer = () => {
         }
 
         res.send(response);
-    });
+    }));
 
-    app.delete('/history/:userId/delete', async(req, res) => {
+    app.delete('/history/:userId/delete', asyncHandler(async(req, res) => {
         await pool.query(`
             DELETE FROM hbb_health.records WHERE user_id=${req.params.userId}`);
 
         res.send(`The records with the user id ${req.params.userId} was deleted from the database.`);
-    })
+    }))
 
     const server = http.createServer(app);
 
