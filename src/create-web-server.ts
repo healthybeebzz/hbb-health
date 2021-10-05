@@ -1,9 +1,13 @@
 import * as http from 'http';
 import * as express from "express";
 import * as bodyParser from 'express';
+import {insertOperation} from "./operations";
+import {connectToDb} from "./db-connect";
 
 
 export const createWebServer = () => {
+
+    const pool = connectToDb();
     const app = express();
 
     const port = 3000;
@@ -30,18 +34,15 @@ export const createWebServer = () => {
         res.send(response);
     });
 
-    app.post('/history/create', (req, res) => {
-        // temporary payload format
+    app.post('/history/create', async(req, res) => {
 
-        const payload = {
-            userId: 12,
-            childhoodDisease: 'bkdjad',
-            majorAdultDisease:'rhsh',
-            surgeries: 'dfhsdh',
-            priorInjuries: 'dfhdfh',
-            medications: 'sdhd',
-            allergies: 'dhdfh'
-        }
+        await insertOperation(pool, {
+            childhoodDisease: req.body.childhoodDisease,
+            majorAdultDisease: req.body.majorAdultDisease,
+            surgeries: req.body.surgeries,
+            priorInjuries: req.body.priorInjuries,
+            medications: req.body.medications,
+            allergies: req.body.allergies});
 
         const response = {
             status: "ok",
