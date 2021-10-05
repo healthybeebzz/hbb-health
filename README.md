@@ -19,7 +19,7 @@
 
 # hbb-person API contract:
 
-POST /history/
+POST /history/create
 - payload:
     - userId
     - Childhood ilnesses
@@ -39,8 +39,8 @@ GET /history/:userId
 PUT /history/:userId/edit
 - payload:
         - userId
-        - Childhood ilnesses
-        - Major adult ilnesses
+        - Childhood disease
+        - Major adult disease
         - Surgeries
         - Prior injuries
         - Medications
