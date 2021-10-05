@@ -4,6 +4,7 @@ import * as bodyParser from 'express';
 import {fetchRecords, insertOperation} from "./operations";
 import {connectToDb} from "./db-connect";
 import {asyncHandler} from "./async-handler";
+import {errorHandler} from "./error-handler";
 
 
 export const createWebServer = () => {
@@ -27,7 +28,7 @@ export const createWebServer = () => {
         };
 
         res.send(response);
-    }));
+    }), errorHandler);
 
     app.post('/history/create', asyncHandler(async(req, res) => {
 
@@ -44,7 +45,7 @@ export const createWebServer = () => {
             message: "New medical History created."
         }
         res.send(response);
-    }));
+    }), errorHandler);
 
     app.put('/history/:userId/edit', asyncHandler(async(req, res) => {
         const records = await fetchRecords(pool, Number(req.params.userId));
@@ -72,14 +73,14 @@ export const createWebServer = () => {
         }
 
         res.send(response);
-    }));
+    }), errorHandler);
 
     app.delete('/history/:userId/delete', asyncHandler(async(req, res) => {
         await pool.query(`
             DELETE FROM hbb_health.records WHERE user_id=${req.params.userId}`);
 
         res.send(`The records with the user id ${req.params.userId} was deleted from the database.`);
-    }))
+    }), errorHandler)
 
     const server = http.createServer(app);
 
