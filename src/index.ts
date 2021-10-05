@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import {createWebServer} from "./create-web-server.js";
 
 const server = createWebServer();
