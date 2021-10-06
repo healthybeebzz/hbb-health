@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node .",
     "build": "tsc",
-    "prestart": "npm run build"
+    "prestart": "npm run build",
+    "docker-compose": "docker-compose -f docker-compose.yml up --build -d"
   },
   "repository": {
     "type": "git",
