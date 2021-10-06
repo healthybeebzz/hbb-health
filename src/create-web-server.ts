@@ -31,7 +31,7 @@ export const createWebServer = () => {
         res.send(response);
     }), errorHandler);
 
-    app.post('/history/create',  payloadValidationMiddleware, asyncHandler(async(req, res) => {
+    app.post('/history/create', payloadValidationMiddleware, asyncHandler(async(req, res) => {
 
         await insertOperation(pool, {
             childhoodDisease: req.body.childhoodDisease,
@@ -48,7 +48,7 @@ export const createWebServer = () => {
         res.send(response);
     }), errorHandler);
 
-    app.put('/history/:userId/edit',  payloadValidationMiddleware, asyncHandler(async(req, res) => {
+    app.put('/history/:userId/edit', asyncHandler(async(req, res) => {
         const records = await fetchRecords(pool, Number(req.params.userId));
 
         if (req.body.childhoodDisease) records.childhoodDisease = req.body.childhoodDisease;
