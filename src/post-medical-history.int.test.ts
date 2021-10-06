@@ -1,9 +1,9 @@
 import {expect} from 'chai';
-import request from 'supertest';
+import * as request from 'supertest';
 import {createWebServer} from "./create-web-server";
 
 
-describe('/person/:personId/medical-history', () => {
+describe('/history/create', () => {
     let port: number;
     let server: { stop: () => Promise<unknown>, port: number, start: () => Promise<unknown> };
 
@@ -18,14 +18,17 @@ describe('/person/:personId/medical-history', () => {
         await server.stop();
     });
 
-    it('given existing entries > when calling get /person/:personId/medical-history > should return valid response', async () => {
+    it('given not existing entry > when calling post /history/create > should return valid response', async () => {
         const payload = {
-            requestId: 1,
-            username: 'test123',
-            externalToken: 1
+            childhoodDisease: "disease big",
+            majorAdultDisease: "chickpot",
+            surgeries: "brain surgery",
+            priorInjuries: "head injury",
+            medications: "xannax",
+            allergies: "all allergies"
         };
 
-        const response = await request(`http://localhost:${port}`).get('/person/1/medical-history').send(payload);
+        const response = await request(`http://localhost:${port}`).post('/history/create').send(payload);
 
         expect(response.status).to.be.equal(200);
         expect(response.body).to.be.deep.equal({
