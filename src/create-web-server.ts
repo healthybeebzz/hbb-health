@@ -5,6 +5,7 @@ import {fetchRecords, insertOperation} from "./operations";
 import {connectToDb} from "./db-connect";
 import {asyncHandler} from "./async-handler";
 import {errorHandler} from "./error-handler";
+import {payloadValidationMiddleware} from "./payload-validation-middleware";
 
 
 export const createWebServer = () => {
@@ -30,7 +31,7 @@ export const createWebServer = () => {
         res.send(response);
     }), errorHandler);
 
-    app.post('/history/create', asyncHandler(async(req, res) => {
+    app.post('/history/create',  payloadValidationMiddleware, asyncHandler(async(req, res) => {
 
         await insertOperation(pool, {
             childhoodDisease: req.body.childhoodDisease,
@@ -47,7 +48,7 @@ export const createWebServer = () => {
         res.send(response);
     }), errorHandler);
 
-    app.put('/history/:userId/edit', asyncHandler(async(req, res) => {
+    app.put('/history/:userId/edit',  payloadValidationMiddleware, asyncHandler(async(req, res) => {
         const records = await fetchRecords(pool, Number(req.params.userId));
 
         if (req.body.childhoodDisease) records.childhoodDisease = req.body.childhoodDisease;
@@ -76,6 +77,8 @@ export const createWebServer = () => {
     }), errorHandler);
 
     app.delete('/history/:userId/delete', asyncHandler(async(req, res) => {
+        if (!req.params.userId) throw new Error('The `userId` parameter is not present.');
+
         await pool.query(`
             DELETE FROM hbb_health.records WHERE user_id=${req.params.userId}`);
 
