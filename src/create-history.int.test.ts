@@ -18,7 +18,7 @@ describe('/history/create', () => {
         await server.stop();
     });
 
-    it('given existing entries > when calling get medical-history > should return valid response', async () => {
+    it('given existing entries > when calling post /history/create > should return valid response', async () => {
         const payload = {
                 childhoodDisease: 'diseases and other diseases',
                 majorAdultDisease: 'non disease',
