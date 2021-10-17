@@ -1,9 +1,9 @@
 import {expect} from 'chai';
-import request from 'supertest';
-import {createWebServer} from "./create-web-server.js";
+import {createWebServer} from "./create-web-server";
+import {default as axios} from 'axios';
 
 
-describe('/create/medical-history', () => {
+describe('/history/create', () => {
     let port: number;
     let server: { stop: () => Promise<unknown>, port: number, start: () => Promise<unknown> };
 
@@ -20,15 +20,18 @@ describe('/create/medical-history', () => {
 
     it('given existing entries > when calling get medical-history > should return valid response', async () => {
         const payload = {
-            requestId: 1,
-            username: 'test123',
-            externalToken: 1
+                childhoodDisease: 'diseases and other diseases',
+                majorAdultDisease: 'non disease',
+                surgeries: 'knee surgery',
+                priorInjuries: 'head injury',
+                medications: 'paracetamol',
+                allergies: 'penutbutter'
         };
 
-        const response = await request(`http://localhost:${port}`).post('/create/medical-history').send(payload);
+        const response = await axios.post(`http://localhost:${port}/history/create`, payload);
 
         expect(response.status).to.be.equal(200);
-        expect(response.body).to.be.deep.equal({
+        expect(response.data).to.be.deep.equal({
             "message": "New medical History created.",
             "status": "ok"
         });
