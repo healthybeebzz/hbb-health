@@ -38,8 +38,6 @@ describe('/history/:userId/delete', () => {
         const response = await axios.delete(`http://localhost:${port}/history/1/delete`);
 
         expect(response.status).to.be.equal(200);
-        expect(response.data).to.be.deep.equal('The records with the user id 1 was deleted from the database.'
-        );
+        expect(response.data).to.be.deep.equal('The records with the user id 1 was deleted from the database.');
     });
 });
-
