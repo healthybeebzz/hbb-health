@@ -1,3 +1,5 @@
+import 'dotenv/config';
+import {config} from "./config";
 import * as http from 'http';
 import * as express from "express";
 import * as bodyParser from 'express';
